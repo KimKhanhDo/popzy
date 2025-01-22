@@ -1,25 +1,37 @@
 Popzy.elements = [];
 
 function Popzy(options = {}) {
+    if (!options.content && !options.templateId) {
+        console.error("You must provide one of 'content' or 'templateId'");
+        return;
+    }
+
+    if (options.content && options.templateId) {
+        options.templateId = null;
+        console.warn(
+            "Both 'content' and 'templateId' are specified. 'content' will take precedence, and 'templateId' will be ignored."
+        );
+    }
+
+    if (options.templateId) {
+        this.template = document.querySelector(`#${options.templateId}`);
+        if (!this.template) {
+            console.error(`#${options.templateId} does not exsist`);
+            return;
+        }
+    }
+
     this.opt = Object.assign(
         {
-            // templateId,
             destroyOnClose: true,
             footer: false,
             closeMethods: ["button", "overlay", "escape"],
             cssClass: [],
-            // onOpen,
-            // onClose,
         },
         options
     );
 
-    this.template = document.querySelector(`#${this.opt.templateId}`);
-    if (!this.template) {
-        console.error(`#${this.opt.templateId} does not exsist`);
-        return;
-    }
-
+    this.content = this.opt.content;
     const { closeMethods } = this.opt;
     this._allowButtonClose = closeMethods.includes("button");
     this._allowBackdropClose = closeMethods.includes("overlay");
@@ -29,45 +41,6 @@ function Popzy(options = {}) {
 
     this._handleEscapeKey = this._handleEscapeKey.bind(this);
 }
-
-Popzy.prototype.build = function () {
-    // Create elements
-    const content = this.template.content.cloneNode(true);
-    this._backdrop = document.createElement("div");
-    this._backdrop.className = "popzy__backdrop";
-
-    const container = document.createElement("div");
-    container.className = "popzy__container";
-
-    this.opt.cssClass.forEach((className) => {
-        if (typeof className === "string") {
-            container.classList.add(className);
-        }
-    });
-
-    if (this._allowButtonClose) {
-        const closeBtn = this._createButton("&times;", "popzy__close", () => this.close());
-        container.append(closeBtn);
-    }
-
-    const modalContent = document.createElement("div");
-    modalContent.className = "popzy__content";
-    modalContent.append(content);
-    container.append(modalContent);
-
-    if (this.opt.footer) {
-        this._modalFooter = document.createElement("footer");
-        this._modalFooter.className = "popzy__footer";
-
-        this._renderFooterContent();
-        this._renderFooterButtons();
-        container.append(this._modalFooter); // loop through btn array & append each btn to the modalFooter
-    }
-
-    // Append elements to complete the backdrop
-    this._backdrop.append(container);
-    document.body.append(this._backdrop);
-};
 
 Popzy.prototype._createButton = function (title, cssClass, callback) {
     const button = document.createElement("button");
@@ -103,6 +76,60 @@ Popzy.prototype._renderFooterContent = function () {
 Popzy.prototype.setFooterContent = function (html) {
     this._footerContent = html;
     this._renderFooterContent();
+};
+
+Popzy.prototype.build = function () {
+    const contentNode = this.content
+        ? document.createElement("div")
+        : this.template.content.cloneNode(true);
+
+    if (this.content) {
+        contentNode.innerHTML = this.content;
+    }
+
+    this._backdrop = document.createElement("div");
+    this._backdrop.className = "popzy__backdrop";
+
+    const container = document.createElement("div");
+    container.className = "popzy__container";
+
+    this.opt.cssClass.forEach((className) => {
+        if (typeof className === "string") {
+            container.classList.add(className);
+        }
+    });
+
+    if (this._allowButtonClose) {
+        const closeBtn = this._createButton("&times;", "popzy__close", () =>
+            this.close()
+        );
+        container.append(closeBtn);
+    }
+
+    this._modalContent = document.createElement("div");
+    this._modalContent.className = "popzy__content";
+    this._modalContent.append(contentNode);
+    container.append(this._modalContent);
+
+    if (this.opt.footer) {
+        this._modalFooter = document.createElement("footer");
+        this._modalFooter.className = "popzy__footer";
+
+        this._renderFooterContent();
+        this._renderFooterButtons();
+        container.append(this._modalFooter); // loop through btn array & append each btn to the modalFooter
+    }
+
+    // Append elements to complete the backdrop
+    this._backdrop.append(container);
+    document.body.append(this._backdrop);
+};
+
+Popzy.prototype.setContent = function (content) {
+    this.content = content;
+    if (this._modalContent) {
+        this._modalContent.innerHTML = this.content;
+    }
 };
 
 Popzy.prototype.open = function () {
