@@ -1,10 +1,11 @@
-.popzy__backdrop {
+.popzy {
     position: fixed;
     inset: 0;
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     opacity: 0;
     visibility: hidden;
     transition: opacity, visibility;
@@ -23,31 +24,33 @@
 .popzy__container {
     position: relative;
     width: min(600px, 90%);
-    padding: 20px 20px 0;
-    border-radius: 10px;
+    padding: 20px;
+    border-radius: 6px;
     background: #fff;
-    transform: scale(0);
+    transform: scale(0.5);
     transition: transform 0.3s;
 }
 
 .popzy__close {
     position: absolute;
-    top: 6px;
-    right: 6px;
+    top: 10px;
+    right: 10px;
     width: 30px;
     height: 30px;
     border-radius: 50%;
     color: #666;
     background: #ebebeb;
     font-size: 2rem;
+    border: none;
+    outline: none;
 }
 
 .popzy__close:hover {
     color: #333;
+    cursor: pointer;
 }
 
 .popzy__content {
-    margin-right: 20px;
     max-height: 80vh;
     overflow-y: auto;
 }
@@ -56,7 +59,7 @@
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-    padding: 20px 0;
+    padding-top: 20px;
 }
 
 .popzy--no-scroll {

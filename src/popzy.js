@@ -23,10 +23,12 @@ function Popzy(options = {}) {
 
     this.opt = Object.assign(
         {
+            enableScrollLock: true,
             destroyOnClose: true,
             footer: false,
             closeMethods: ["button", "overlay", "escape"],
             cssClass: [],
+            scrollLockTarget: () => document.body,
         },
         options
     );
@@ -73,9 +75,19 @@ Popzy.prototype._renderFooterContent = function () {
     }
 };
 
-Popzy.prototype.setFooterContent = function (html) {
-    this._footerContent = html;
+Popzy.prototype.setFooterContent = function (content) {
+    this._footerContent = content;
     this._renderFooterContent();
+};
+
+// create function & save the reference to this._handleEscapeKey
+Popzy.prototype._handleEscapeKey = function (e) {
+    console.log(this);
+
+    const lastModal = Popzy.elements[Popzy.elements.length - 1];
+    if ((e.key === "Escape") & (this === lastModal)) {
+        this.close();
+    }
 };
 
 Popzy.prototype.build = function () {
@@ -88,7 +100,7 @@ Popzy.prototype.build = function () {
     }
 
     this._backdrop = document.createElement("div");
-    this._backdrop.className = "popzy__backdrop";
+    this._backdrop.className = "popzy";
 
     const container = document.createElement("div");
     container.className = "popzy__container";
@@ -132,6 +144,17 @@ Popzy.prototype.setContent = function (content) {
     }
 };
 
+Popzy.prototype._hasScrollbar = function (target) {
+    if ([document.documentElement, document.body].includes(target)) {
+        return (
+            document.documentElement.scrollHeight >
+                document.documentElement.clientHeight ||
+            document.body.scrollHeight > document.body.clientHeight
+        );
+    }
+    return target.scrollHeight > target.clientHeight;
+};
+
 Popzy.prototype.open = function () {
     // push obj Modal into an array everytime this.open is triggered
     Popzy.elements.push(this);
@@ -140,13 +163,24 @@ Popzy.prototype.open = function () {
         this.build();
     }
 
-    //  Preventing scrolling
-    document.body.classList.add("popzy--no-scroll");
-    document.body.style.paddingRight = this._getScrolbarlWidth() + "px";
-
     setTimeout(() => {
         this._backdrop.classList.add("popzy--show");
     }, 0);
+
+    //  Condition to prevent scrolling
+    if (this.opt.enableScrollLock) {
+        const target = this.opt.scrollLockTarget();
+
+        // check if the target element has scrollbar or not
+        if (this._hasScrollbar(target)) {
+            target.classList.add("popzy--no-scroll");
+            const targetPadRight = parseInt(
+                getComputedStyle(target).paddingRight
+            );
+            target.style.paddingRight =
+                targetPadRight + this._getScrolbarlWidth() + "px";
+        }
+    }
 
     if (this._allowBackdropClose) {
         this._backdrop.onclick = (e) => {
@@ -163,16 +197,6 @@ Popzy.prototype.open = function () {
     this._onTransitionEnd(this.opt.onOpen);
 
     return this._backdrop;
-};
-
-// create function & save the reference to this._handleEscapeKey
-Popzy.prototype._handleEscapeKey = function (e) {
-    console.log(this);
-
-    const lastModal = Popzy.elements[Popzy.elements.length - 1];
-    if ((e.key === "Escape") & (this === lastModal)) {
-        this.close();
-    }
 };
 
 Popzy.prototype.close = function (isDestroyed = this.opt.destroyOnClose) {
@@ -197,9 +221,13 @@ Popzy.prototype.close = function (isDestroyed = this.opt.destroyOnClose) {
         if (typeof this.opt.onClose === "function") this.opt.onClose();
 
         // Condition to enable scrolling when opening multi modals at the same time
-        if (!Popzy.elements.length) {
-            document.body.classList.remove("popzy--no-scroll");
-            document.body.style.paddingRight = "";
+        if (!Popzy.elements.length && this.opt.enableScrollLock) {
+            const target = this.opt.scrollLockTarget();
+
+            if (this._hasScrollbar(target)) {
+                target.classList.remove("popzy--no-scroll");
+                target.style.paddingRight = "";
+            }
         }
     });
 };

@@ -27,7 +27,7 @@
                     JavaScript.
                 </div>
                 <a
-                    href="https://kimkhanhdo.github.io/popzy/"
+                    href="https://github.com/sondnpt00343/popzy"
                     class="header__github"
                     target="_blank"
                     ><img src="./assets/github.svg" alt="View on GitHub"
@@ -41,7 +41,8 @@
             <h2 data-bullet="1" class="title" id="try-it-out">Try It Out</h2>
             <p>
                 Popzy is a lightweight <strong>modal library</strong> built with
-                pure JavaScript. (<a href="https://kimkhanhdo.github.io/popzy/"
+                pure JavaScript. (<a
+                    href="https://github.com/sondnpt00343/popzy"
                     >Source code available on GitHub</a
                 >)
             </p>
@@ -93,7 +94,7 @@
                     <td>Direct Download</td>
                     <td>
                         <a
-                            href="https://github.com/KimKhanhDo/popzy/archive/refs/heads/main.zip"
+                            href="https://github.com/sondnpt00343/popzy/archive/master.zip"
                             title="Download Popzy"
                         >
                             Download ZIP
@@ -116,13 +117,13 @@
 
             <pre
                 class="html"
-            ><code>&lt;script src=&quot;https://cdn.jsdelivr.net/gh/kimkhanhdo/popzy/popzy.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+            ><code>&lt;script src=&quot;https://cdn.jsdelivr.net/gh/sondnpt00343/popzy/popzy.min.js&quot;&gt;&lt;/script&gt;</code></pre>
 
             <p>Optionally, include the Popzy CSS file for default styling:</p>
 
             <pre class="html"><code>&lt;link
-    rel=&quot;stylesheet&quot;
-    href=&quot;https://cdn.jsdelivr.net/gh/kimkhanhdo/popzy/popzy.min.css&quot;
+rel=&quot;stylesheet&quot;
+href=&quot;https://cdn.jsdelivr.net/gh/sondnpt00343/popzy/popzy.min.css&quot;
 &gt;</code></pre>
 
             <p>
@@ -134,18 +135,18 @@
             <h2 data-bullet="3" class="title" id="usage">Usage</h2>
             <pre class="javascript"><code>// Initialize a new modal
 const modal = new Popzy({
-    content: '&lt;h1&gt;This is content&lt;/h1&gt;',
-    // templateId: 'my-modal-template',
-    footer: true,
-    destroyOnClose: false,
-    closeMethods: ['overlay', 'button', 'escape'],
-    cssClass: ['custom-class-1', 'custom-class-2'],
-    onOpen: function() {
-        console.log('Modal opened');
-    },
-    onClose: function() {
-        console.log('Modal closed');
-    },
+content: '&lt;h1&gt;This is content&lt;/h1&gt;',
+// templateId: 'my-modal-template',
+footer: true,
+destroyOnClose: false,
+closeMethods: ['overlay', 'button', 'escape'],
+cssClass: ['custom-class-1', 'custom-class-2'],
+onOpen: function() {
+    console.log('Modal opened');
+},
+onClose: function() {
+    console.log('Modal closed');
+},
 });
 
 // Set modal content
@@ -153,11 +154,11 @@ modal.setContent('&lt;h1&gt;This is new content&lt;/h1&gt;');
 
 // Add footer buttons
 modal.addFooterBtn('Cancel', 'btn btn--default', function(e) {
-    modal.close();
+modal.close();
 });
 
 modal.addFooterBtn('Confirm', 'btn btn--primary', function(e) {
-    modal.close();
+modal.close();
 });
 
 // Open the modal
@@ -174,10 +175,10 @@ modal.close();</code></pre>
 
             <pre class="html">
 <code>&lt;template id="my-modal-template"&gt;
-    &lt;div&gt;
-        &lt;h1&gt;This is modal content&lt;/h1&gt;
-        &lt;p&gt;You can add any HTML here.&lt;/p&gt;
-    &lt;/div&gt;
+&lt;div&gt;
+    &lt;h1&gt;This is modal content&lt;/h1&gt;
+    &lt;p&gt;You can add any HTML here.&lt;/p&gt;
+&lt;/div&gt;
 &lt;/template&gt;
 </code>
 </pre>
@@ -353,7 +354,7 @@ modal.close();</code></pre>
             <p>
                 For more details, you can view the full CSS file directly here:
                 <a
-                    href="https://github.com/KimKhanhDo/popzy/blob/main/src/popzy.css"
+                    href="https://github.com/sondnpt00343/popzy/blob/main/src/popzy.css"
                     target="_blank"
                     >popzy.css</a
                 >.
@@ -419,10 +420,8 @@ modal.close();</code></pre>
             </footer>
         </div>
         <!-- /CONTAINER -->
-        <template id="modal-1">
-            <h1>Template Modal 1</h1>
-        </template>
 
+        <!-- SCRIPT -->
         <script src="./assets/highlight/highlight.js"></script>
         <script src="./src/popzy.js"></script>
         <script>
@@ -430,22 +429,27 @@ modal.close();</code></pre>
             hljs.initHighlightingOnLoad();
 
             // Modal samples
-            const modal1 = new Popzy({
-                templateId: "modal-1",
-                content: "<h1>Content Modal 1</h1>",
-            });
+            // const modal1 = new Popzy({
+            //     templateId: "modal-1",
+            //     content: "<h1>Content Modal 1</h1>",
+            // });
 
             // Basic Modal
-            // const modal1Btn = document.querySelector(".js-popzy-modal-1");
-            // const modal1 = new Popzy({
-            //     content: `
-            //         <h1>Basic Modal</h1>
-            //         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
-            //     `,
-            // });
-            // modal1Btn.onclick = () => {
-            //     modal1.open();
-            // };
+            const modal1Btn = document.querySelector(".js-popzy-modal-1");
+
+            const modal1 = new Popzy({
+                content: `
+                    <h1>Basic Modal</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                `,
+                // scrollLockTarget: () => {
+                //     return document.querySelector(".wrapper");
+                // },
+            });
+
+            modal1Btn.onclick = () => {
+                modal1.open();
+            };
         </script>
     </body>
 </html>
