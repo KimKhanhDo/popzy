@@ -27,7 +27,7 @@
                     JavaScript.
                 </div>
                 <a
-                    href="https://github.com/sondnpt00343/popzy"
+                    href="https://github.com/KimKhanhDo/popzy"
                     class="header__github"
                     target="_blank"
                     ><img src="./assets/github.svg" alt="View on GitHub"
@@ -41,8 +41,7 @@
             <h2 data-bullet="1" class="title" id="try-it-out">Try It Out</h2>
             <p>
                 Popzy is a lightweight <strong>modal library</strong> built with
-                pure JavaScript. (<a
-                    href="https://github.com/sondnpt00343/popzy"
+                pure JavaScript. (<a href="https://github.com/KimKhanhDo/popzy"
                     >Source code available on GitHub</a
                 >)
             </p>
@@ -94,7 +93,7 @@
                     <td>Direct Download</td>
                     <td>
                         <a
-                            href="https://github.com/sondnpt00343/popzy/archive/master.zip"
+                            href="https://github.com/KimKhanhDo/popzy/archive/refs/heads/main.zip"
                             title="Download Popzy"
                         >
                             Download ZIP
@@ -115,16 +114,22 @@
 
             <p>Include the Popzy JavaScript file in your project:</p>
 
-            <pre
-                class="html"
-            ><code>&lt;script src=&quot;https://cdn.jsdelivr.net/gh/sondnpt00343/popzy/popzy.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <pre class="html">
+                <code>
+                    &lt;script src=&quot;https://cdn.jsdelivr.net/gh/kimkhanhdo/popzy@724d411/popzy.min.js&quot;&gt;&lt;/script&gt;
+                </code>
+            </pre>
 
             <p>Optionally, include the Popzy CSS file for default styling:</p>
 
-            <pre class="html"><code>&lt;link
-rel=&quot;stylesheet&quot;
-href=&quot;https://cdn.jsdelivr.net/gh/sondnpt00343/popzy/popzy.min.css&quot;
-&gt;</code></pre>
+            <pre class="html">
+                <code>
+                &lt;link
+                rel=&quot;stylesheet&quot;
+                href=&quot;https://cdn.jsdelivr.net/gh/kimkhanhdo/popzy@724d411/popzy.min.css&quot;
+                &gt;
+                </code>
+            </pre>
 
             <p>
                 You can explore the list of CSS classes used by Popzy in the
@@ -133,39 +138,43 @@ href=&quot;https://cdn.jsdelivr.net/gh/sondnpt00343/popzy/popzy.min.css&quot;
             </p>
 
             <h2 data-bullet="3" class="title" id="usage">Usage</h2>
-            <pre class="javascript"><code>// Initialize a new modal
-const modal = new Popzy({
-content: '&lt;h1&gt;This is content&lt;/h1&gt;',
-// templateId: 'my-modal-template',
-footer: true,
-destroyOnClose: false,
-closeMethods: ['overlay', 'button', 'escape'],
-cssClass: ['custom-class-1', 'custom-class-2'],
-onOpen: function() {
-    console.log('Modal opened');
-},
-onClose: function() {
-    console.log('Modal closed');
-},
-});
+            <pre class="javascript">
+                <code>
+                    // Initialize a new modal
+                    const modal = new Popzy({
+                    content: '&lt;h1&gt;This is content&lt;/h1&gt;',
+                    // templateId: 'my-modal-template',
+                    footer: true,
+                    destroyOnClose: false,
+                    closeMethods: ['overlay', 'button', 'escape'],
+                    cssClass: ['custom-class-1', 'custom-class-2'],
+                    onOpen: function() {
+                        console.log('Modal opened');
+                    },
+                    onClose: function() {
+                        console.log('Modal closed');
+                    },
+                    });
 
-// Set modal content
-modal.setContent('&lt;h1&gt;This is new content&lt;/h1&gt;');
+                    // Set modal content
+                    modal.setContent('&lt;h1&gt;This is new content&lt;/h1&gt;');
 
-// Add footer buttons
-modal.addFooterBtn('Cancel', 'btn btn--default', function(e) {
-modal.close();
-});
+                    // Add footer buttons
+                    modal.addFooterBtn('Cancel', 'btn btn--default', function(e) {
+                    modal.close();
+                    });
 
-modal.addFooterBtn('Confirm', 'btn btn--primary', function(e) {
-modal.close();
-});
+                    modal.addFooterBtn('Confirm', 'btn btn--primary', function(e) {
+                    modal.close();
+                    });
 
-// Open the modal
-modal.open();
+                    // Open the modal
+                    modal.open();
 
-// Close the modal
-modal.close();</code></pre>
+                    // Close the modal
+                    modal.close();
+                </code>
+            </pre>
 
             <p>
                 If you use <code>templateId</code>, ensure that a
@@ -174,14 +183,15 @@ modal.close();</code></pre>
             </p>
 
             <pre class="html">
-<code>&lt;template id="my-modal-template"&gt;
-&lt;div&gt;
-    &lt;h1&gt;This is modal content&lt;/h1&gt;
-    &lt;p&gt;You can add any HTML here.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/template&gt;
-</code>
-</pre>
+                <code>
+                    &lt;template id="my-modal-template"&gt;
+                &lt;div&gt;
+                    &lt;h1&gt;This is modal content&lt;/h1&gt;
+                    &lt;p&gt;You can add any HTML here.&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;/template&gt;
+                </code>
+            </pre>
             <p>
                 <strong>Note:</strong> When using <code>templateId</code>, do
                 not provide <code>content</code>. If both are specified,
