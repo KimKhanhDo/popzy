@@ -168,7 +168,7 @@ Popzy.prototype.open = function () {
     }, 0);
 
     //  Condition to prevent scrolling
-    if (this.opt.enableScrollLock) {
+    if (Popzy.elements.length === 1 && this.opt.enableScrollLock) {
         const target = this.opt.scrollLockTarget();
 
         // check if the target element has scrollbar or not

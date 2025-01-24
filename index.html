@@ -66,16 +66,16 @@
             <button class="btn btn--secondary btn-demo js-popzy-modal-3">
                 Large Content Modal
             </button>
-            <button class="btn btn--secondary btn-demo js-popzy-modal-5">
+            <button class="btn btn--secondary btn-demo js-popzy-modal-4">
                 Footer-Only Close Modal
             </button>
-            <button class="btn btn--secondary btn-demo js-popzy-modal-6">
+            <button class="btn btn--secondary btn-demo js-popzy-modal-5">
                 Persistent Modal (Stays in DOM)
             </button>
-            <button class="btn btn--secondary btn-demo js-popzy-modal-7">
+            <button class="btn btn--secondary btn-demo js-popzy-modal-6">
                 Multiple Modals
             </button>
-            <button class="btn btn--secondary btn-demo js-popzy-modal-4">
+            <button class="btn btn--secondary btn-demo js-popzy-modal-7">
                 YouTube Embed Modal
             </button>
 
@@ -116,7 +116,7 @@
 
             <pre class="html">
                 <code>
-                    &lt;script src=&quot;https://cdn.jsdelivr.net/gh/kimkhanhdo/popzy@724d411/popzy.min.js&quot;&gt;&lt;/script&gt;
+                    &lt;script src=&quot;https://cdn.jsdelivr.net/gh/kimkhanhdo/popzy@v1.0.0/popzy.min.js&quot;&gt;&lt;/script&gt;
                 </code>
             </pre>
 
@@ -126,7 +126,7 @@
                 <code>
                 &lt;link
                 rel=&quot;stylesheet&quot;
-                href=&quot;https://cdn.jsdelivr.net/gh/kimkhanhdo/popzy@724d411/popzy.min.css&quot;
+                href=&quot;https://cdn.jsdelivr.net/gh/kimkhanhdo/popzy@v1.0.0/popzy.min.css&quot;
                 &gt;
                 </code>
             </pre>
@@ -439,26 +439,120 @@
             hljs.initHighlightingOnLoad();
 
             // Modal samples
-            // const modal1 = new Popzy({
-            //     templateId: "modal-1",
-            //     content: "<h1>Content Modal 1</h1>",
-            // });
 
             // Basic Modal
             const modal1Btn = document.querySelector(".js-popzy-modal-1");
-
             const modal1 = new Popzy({
                 content: `
                     <h1>Basic Modal</h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
                 `,
-                // scrollLockTarget: () => {
-                //     return document.querySelector(".wrapper");
-                // },
             });
 
             modal1Btn.onclick = () => {
                 modal1.open();
+            };
+
+            // Modal with Buttons
+            const modal2Btn = document.querySelector(".js-popzy-modal-2");
+            const modal2 = new Popzy({
+                content: `
+                    <h1>Modal with Buttons</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                `,
+                footer: true,
+            });
+
+            modal2.addFooterButton("Cancel", "modal-btn", () => {
+                modal2.close();
+            });
+
+            modal2.addFooterButton("Confirm", "modal-btn primary", () => {
+                console.log("Confirm");
+                modal2.close();
+            });
+
+            modal2Btn.onclick = () => {
+                modal2.open();
+            };
+
+            // Large Content Modal
+            const modal3Btn = document.querySelector(".js-popzy-modal-3");
+            const modal3 = new Popzy({
+                content: `
+                    <h1>Large Content Modal</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                `,
+            });
+
+            modal3Btn.onclick = () => {
+                modal3.open();
+            };
+
+            // Footer-Only Close Modal
+            const modal4Btn = document.querySelector(".js-popzy-modal-4");
+            const modal4 = new Popzy({
+                content: `
+                    <h1>Footer-Only Close Modal</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                `,
+                footer: true,
+                closeMethods: [],
+            });
+
+            modal4.addFooterButton("Close", "modal-btn", () => {
+                modal4.close();
+            });
+
+            modal4Btn.onclick = () => {
+                modal4.open();
+            };
+
+            // Persistent Modal (Stays in DOM)
+            const modal5Btn = document.querySelector(".js-popzy-modal-5");
+            const modal5 = new Popzy({
+                content: `
+                    <h1>Persistent Modal (Stays in DOM)</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                `,
+                destroyOnClose: false,
+            });
+
+            modal5Btn.onclick = () => {
+                modal5.open();
+            };
+
+            // Multiple Modals
+            const modal6Btn = document.querySelector(".js-popzy-modal-6");
+            const modal6 = new Popzy({
+                content: `
+                    <h1>Multiple Modals</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil cumque adipisci mollitia voluptatibus explicabo non perspiciatis eaque sed qui. Est.</p>
+                    <button class="btn" onclick="modal1.open();">Open Basic Modal</button>
+                `,
+                destroyOnClose: false,
+            });
+
+            modal6Btn.onclick = () => {
+                modal6.open();
+            };
+
+            // YouTube Embed Modal
+            const modal7Btn = document.querySelector(".js-popzy-modal-7");
+            const modal7 = new Popzy({
+                content: `
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/pm3mXl4Duj0?si=Vcncu3oJJaIyW28H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                `,
+                destroyOnClose: false,
+            });
+
+            modal7Btn.onclick = () => {
+                modal7.open();
             };
         </script>
     </body>
